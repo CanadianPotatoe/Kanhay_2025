@@ -190,3 +190,13 @@ My journey starts here.
   });
 
 </script>
+<div>
+<button>some button text</button>
+</div>
+
+
+<div> 
+<button><a href="about/">About</a></button>
+<button><a href="KanhayPage1/">My Journey</a></button>
+</div>
+
