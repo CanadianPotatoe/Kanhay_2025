@@ -17,5 +17,15 @@ const person = {
     { name: "Web App", status: "Completed" }
   ]
 };
-
+console.log (person);
+console.log (person.age);
+console.log (person.age-5);
+console.log (person.age);
+console.log(person.currentClasses[0]);
+person.currentClasses[0]= "Cooking"
+console.log(person.currentClasses[0]);
+console.log(person.currentClasses);
+console.log(typeof person)
+console.log(typeof person.currentClasses)
+console.log(typeof person.age)
 </script>

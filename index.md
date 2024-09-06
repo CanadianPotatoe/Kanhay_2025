@@ -190,13 +190,15 @@ My journey starts here.
   });
 
 </script>
+
+
+
+<p id="message">Your Journey Begins Here</p>
 <div>
 <button>some button text</button>
 </div>
-
-
 <div> 
-<button><a href="about/">About</a></button>
-<button><a href="KanhayPage1/">My Journey</a></button>
+    <button><a id="link1" href="about/">About</a></button>
+    <button><a id="link2" href="KanhayPage1/">My Journey</a></button>
 </div>
 
