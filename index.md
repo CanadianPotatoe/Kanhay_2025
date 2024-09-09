@@ -5,7 +5,6 @@ description: Home Page
 image: /images/mario_animation.png
 hide: true
 ---
-
 My journey starts here.
 <!-- Liquid:  statements -->
 
@@ -200,5 +199,11 @@ My journey starts here.
 <div> 
     <button><a id="link1" href="about/">About</a></button>
     <button><a id="link2" href="KanhayPage1/">My Journey</a></button>
+     <button id="switchButton">Switch Button</button>
 </div>
 
+<script>
+   function debugging() {console.log ("testing123")}
+var button_clicked=document.getElementById("switchButton") 
+button_clicked.onclick = debugging
+</script>
