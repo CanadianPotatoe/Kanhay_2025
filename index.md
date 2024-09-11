@@ -5,7 +5,8 @@ description: Home Page
 image: /images/mario_animation.png
 hide: true
 ---
-My journey starts here.
+<h1> ROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTER </h1>
+<img src="images/images.png"> 
 <!-- Liquid:  statements -->
 
 <!-- Include submenu from _includes to top of pages -->
@@ -189,6 +190,7 @@ My journey starts here.
   });
 
 </script>
+
 
 
 
