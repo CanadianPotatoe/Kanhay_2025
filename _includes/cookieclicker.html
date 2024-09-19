@@ -52,9 +52,10 @@
           var cookiesAchievementThreshold = 100;
           var upgradesAchievementThreshold = 5;
           var autoClickerAchievementThreshold = 1;
-  
+          var clickSound = new Audio('../images/boom.mp3');
           function clickCookie() {
               score += clickValue;
+              clickSound.play();
               updateScore();
   
               // Check and update achievements
