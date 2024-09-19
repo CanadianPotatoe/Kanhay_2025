@@ -190,7 +190,26 @@ hide: true
   });
 
 </script>
-
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="container mt-5">
+    <h2>Jupyter Notebooks</h2>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Notebooks
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-09-java.ipynb">Java</a>
+            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-10-py.ipynb">Python</a>
+            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-10-md.ipynb">Markdown</a>
+        </div>
+    </div>
+</div>
+<!-- Include Bootstrap JS and correct Popper.js version -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
@@ -201,11 +220,29 @@ hide: true
 <div> 
     <button><a id="link1" href="about/">About</a></button>
     <button><a id="link2" href="KanhayPage1/">My Journey</a></button>
-     <button id="switchButton">Switch Button</button>
 </div>
 
-<script>
-   function debugging() {console.log ("testing123")}
-var button_clicked=document.getElementById("switchButton") 
-button_clicked.onclick = debugging
+
+<div id="paragraph">
+      <p id="text">The links are not switched.</p>
+      <a id="switchLinkButton" onclick="switchText()" target="_blank">Click Me!!!</a>
+</div>
+
+<script id="paragraph_text">
+  function switchText() {
+    let displayText = document.getElementById("text");
+    let displayLink1 = document.getElementById("link1").href;
+    let displayLink2 = document.getElementById("link2").href;
+    let currentText = displayText.innerHTML;
+    if (currentText === "The links are not switched.") {
+      displayText.innerHTML = "Switched!";
+      document.getElementById('link1').href = displayLink2;
+      document.getElementById('link2').href = displayLink1;
+    } else {
+      displayText.innerHTML = "The links are not switched.";
+    }
+  }
 </script>
+
+
+
