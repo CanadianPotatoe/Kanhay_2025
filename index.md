@@ -285,6 +285,8 @@
             <div class="hero-buttons">
                 <a href="https://www.linkedin.com/in/kanhay-patil-048a89368/" class="btn">LinkedIn Profile</a>
                 <a href="/Kanhay_2025/csp/thelastone" class="btn">Experience</a>
+                <a href="/Kanhay_2025/csp/showcase" class="btn">Showcases</a>
+                <a href="/Kanhay_2025/csp/finalhomework" class="btn">Certificates</a>
             </div>
         </section>
 
