@@ -284,7 +284,7 @@
             
             <div class="hero-buttons">
                 <a href="https://www.linkedin.com/in/kanhay-patil-048a89368/" class="btn">LinkedIn Profile</a>
-                <a href="/csp/thelastone/" class="btn">My Experiences</a>
+                <a href="/Kanhay_2025/csp/thelastone/" class="btn">My Experiences</a>
             </div>
         </section>
 
