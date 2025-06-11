@@ -1,248 +1,332 @@
----
-layout: base
-title: Student Home 
-description: Home Page
-image: /images/mario_animation.png
-hide: true
----
-<h1> ROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTER </h1>
-<img src="images/images.png"> 
-<!-- Liquid:  statements -->
-
-<!-- Include submenu from _includes to top of pages -->
-{% include nav/home.html %}
-<!--- Concatenation of site URL to frontmatter image  --->
-{% assign sprite_file = site.baseurl | append: page.image %}
-<!--- Has is a list variable containing mario metadata for sprite --->
-{% assign hash = site.data.mario_metadata %}  
-<!--- Size width/height of Sprit images --->
-{% assign pixels = 256 %}
-
-<!--- HTML for page contains <p> tag named "Mario" and class properties for a "sprite"  -->
-
-<p id="mario" class="sprite"></p>
-  
-<!--- Embedded Cascading Style Sheet (CSS) rules, 
-        define how HTML elements look 
---->
-<style>
-
-  /*CSS style rules for the id and class of the sprite...
-  */
-  .sprite {
-    height: {{pixels}}px;
-    width: {{pixels}}px;
-    background-image: url('{{sprite_file}}');
-    background-repeat: no-repeat;
-  }
-
-  /*background position of sprite element
-  */
-  #mario {
-    background-position: calc({{animations[0].col}} * {{pixels}} * -1px) calc({{animations[0].row}} * {{pixels}}* -1px);
-  }
-</style>
-
-<!--- Embedded executable code--->
-<script>
-  ////////// convert YML hash to javascript key:value objects /////////
-
-  var mario_metadata = {}; //key, value object
-  {% for key in hash %}  
-  
-  var key = "{{key | first}}"  //key
-  var values = {} //values object
-  values["row"] = {{key.row}}
-  values["col"] = {{key.col}}
-  values["frames"] = {{key.frames}}
-  mario_metadata[key] = values; //key with values added
-
-  {% endfor %}
-
-  ////////// game object for player /////////
-
-  class Mario {
-    constructor(meta_data) {
-      this.tID = null;  //capture setInterval() task ID
-      this.positionX = 0;  // current position of sprite in X direction
-      this.currentSpeed = 0;
-      this.marioElement = document.getElementById("mario"); //HTML element of sprite
-      this.pixels = {{pixels}}; //pixel offset of images in the sprite, set by liquid constant
-      this.interval = 100; //animation time interval
-      this.obj = meta_data;
-      this.marioElement.style.position = "absolute";
-    }
-
-    animate(obj, speed) {
-      let frame = 0;
-      const row = obj.row * this.pixels;
-      this.currentSpeed = speed;
-
-      this.tID = setInterval(() => {
-        const col = (frame + obj.col) * this.pixels;
-        this.marioElement.style.backgroundPosition = `-${col}px -${row}px`;
-        this.marioElement.style.left = `${this.positionX}px`;
-
-        this.positionX += speed;
-        frame = (frame + 1) % obj.frames;
-
-        const viewportWidth = window.innerWidth;
-        if (this.positionX > viewportWidth - this.pixels) {
-          document.documentElement.scrollLeft = this.positionX - viewportWidth + this.pixels;
-        }
-      }, this.interval);
-    }
-
-    startWalking() {
-      this.stopAnimate();
-      this.animate(this.obj["Walk"], 3);
-    }
-
-    startRunning() {
-      this.stopAnimate();
-      this.animate(this.obj["Run1"], 6);
-    }
-
-    startPuffing() {
-      this.stopAnimate();
-      this.animate(this.obj["Puff"], 0);
-    }
-
-    startCheering() {
-      this.stopAnimate();
-      this.animate(this.obj["Cheer"], 0);
-    }
-
-    startFlipping() {
-      this.stopAnimate();
-      this.animate(this.obj["Flip"], 0);
-    }
-
-    startResting() {
-      this.stopAnimate();
-      this.animate(this.obj["Rest"], 0);
-    }
-
-    stopAnimate() {
-      clearInterval(this.tID);
-    }
-  }
-
-  const mario = new Mario(mario_metadata);
-
-  ////////// event control /////////
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      if (event.repeat) {
-        mario.startCheering();
-      } else {
-        if (mario.currentSpeed === 0) {
-          mario.startWalking();
-        } else if (mario.currentSpeed === 3) {
-          mario.startRunning();
-        }
-      }
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      if (event.repeat) {
-        mario.stopAnimate();
-      } else {
-        mario.startPuffing();
-      }
-    }
-  });
-
-  //touch events that enable animations
-  window.addEventListener("touchstart", (event) => {
-    event.preventDefault(); // prevent default browser action
-    if (event.touches[0].clientX > window.innerWidth / 2) {
-      // move right
-      if (currentSpeed === 0) { // if at rest, go to walking
-        mario.startWalking();
-      } else if (currentSpeed === 3) { // if walking, go to running
-        mario.startRunning();
-      }
-    } else {
-      // move left
-      mario.startPuffing();
-    }
-  });
-
-  //stop animation on window blur
-  window.addEventListener("blur", () => {
-    mario.stopAnimate();
-  });
-
-  //start animation on window focus
-  window.addEventListener("focus", () => {
-     mario.startFlipping();
-  });
-
-  //start animation on page load or page refresh
-  document.addEventListener("DOMContentLoaded", () => {
-    // adjust sprite size for high pixel density devices
-    const scale = window.devicePixelRatio;
-    const sprite = document.querySelector(".sprite");
-    sprite.style.transform = `scale(${0.2 * scale})`;
-    mario.startResting();
-  });
-
-</script>
+<html lang="en">
 <head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanhay Patil - Engineering Student</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Simple animated dots background */
+        .dots-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(21, 153, 87, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: dotMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes dotMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            color: #159957;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.6s forwards;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #159957;
+            color: #159957;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #159957;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(21, 153, 87, 0.3);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title,
+        .hero-subtitle,
+        .hero-buttons {
+            transform: translateY(30px);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #159957;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #159957;
+        }
+
+        .project {
+            background: white;
+            border: 1px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .project:hover {
+            border-color: #159957;
+            box-shadow: 0 8px 24px rgba(21, 153, 87, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #159957;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            color: #159957;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border: 1px solid #159957;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: #159957;
+            color: white;
+        }
+
+        /* Contact Section */
+        .contact {
+            text-align: center;
+            padding: 3rem 0 4rem;
+            background: #f8f9fa;
+            margin: 2rem -20px 0;
+            border-radius: 16px;
+        }
+
+        .contact-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #159957;
+            margin-bottom: 1rem;
+        }
+
+        .contact-text {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-email {
+            display: inline-block;
+            color: #159957;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 24px;
+            border: 2px solid #159957;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: #159957;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Remove scroll animations - keep elements visible */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+                text-align: center;
+            }
+
+            .project {
+                padding: 1.5rem;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+
+            .project-link {
+                text-align: center;
+            }
+
+            .contact {
+                margin-left: -15px;
+                margin-right: -15px;
+                padding: 2rem 1rem 3rem;
+            }
+        }
+    </style>
 </head>
-<div class="container mt-5">
-    <h2>Jupyter Notebooks</h2>
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Notebooks
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-09-java.ipynb">Java</a>
-            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-10-py.ipynb">Python</a>
-            <a class="dropdown-item" href="../Kanhay_2025/_notebooks/2024-09-10-md.ipynb">Markdown</a>
-        </div>
+<body>
+    <div class="dots-bg"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Kanhay Patil</h1>
+            <p class="hero-subtitle">
+                Engineering student at Del Norte High School, passionate about mechanical and electrical engineering through the lens of computer science.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="https://www.linkedin.com/in/kanhay-patil-048a89368/" class="btn">LinkedIn Profile</a>
+                <a href="/csp/thelastone/" class="btn">My Experiences</a>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects">
+            <h2 class="section-title fade-in">Featured Projects</h2>
+            
+            <div class="project fade-in">
+                <h3 class="project-title">CrossWise</h3>
+                <p class="project-description">
+                    A smart web application providing intelligent border wait time predictions for San Ysidro and Otay Mesa ports. Uses machine learning algorithms trained on historical data to help users plan efficient border crossings. I developed the weather prediction component and designed a clean frontend interface for accessible data visualization.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/illuminati1618/CrossWise" class="project-link">Frontend Repository</a>
+                    <a href="https://github.com/illuminati1618/CrossWise_backend" class="project-link">Backend Repository</a>
+                </div>
+            </div>
+
+            <div class="project fade-in">
+                <h3 class="project-title">Neptune</h3>
+                <p class="project-description">
+                    A comprehensive CRUD system with real-time theme customization capabilities. Built dynamic JavaScript interfaces, custom CSS generation, Flask route handling, and database integration. Features automated theme creation on user signup and live updates through asynchronous requests, deployed on AWS infrastructure.
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/DNHS-Neptune/neptune_frontend" class="project-link">Frontend Repository</a>
+                    <a href="https://github.com/DNHS-Neptune/neptune_backend" class="project-link">Backend Repository</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact fade-in">
+            <h2 class="contact-title">Get in Touch</h2>
+            <p class="contact-text">
+                Interested in collaborating or learning more about my projects? Let's connect!
+            </p>
+            <a href="mailto:kanhay.patil@gmail.com" class="contact-email">kanhay.patil@gmail.com</a>
+        </section>
     </div>
-</div>
-<!-- Include Bootstrap JS and correct Popper.js version -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
-<p id="message">Your Journey Begins Here</p>
-<div>
-<button>some button text</button>
-</div>
-<div> 
-    <button><a id="link1" href="about/">About</a></button>
-    <button><a id="link2" href="KanhayPage1/">My Journey</a></button>
-</div>
-
-
-<div id="paragraph">
-      <p id="text">The links are not switched.</p>
-      <a id="switchLinkButton" onclick="switchText()" target="_blank">Click Me!!!</a>
-</div>
-
-<script id="paragraph_text">
-  function switchText() {
-    let displayText = document.getElementById("text");
-    let displayLink1 = document.getElementById("link1").href;
-    let displayLink2 = document.getElementById("link2").href;
-    let currentText = displayText.innerHTML;
-    if (currentText === "The links are not switched.") {
-      displayText.innerHTML = "Switched!";
-      document.getElementById('link1').href = displayLink2;
-      document.getElementById('link2').href = displayLink1;
-    } else {
-      displayText.innerHTML = "The links are not switched.";
-    }
-  }
-</script>
-
-
-
+    <script>
+        // Script section kept minimal - no scroll animations
+    </script>
+</body>
+</html>
